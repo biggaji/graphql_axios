@@ -3,19 +3,26 @@
   "version": "1.0.0",
   "description": "Learning to make request to graphql backend using axios library",
   "main": "app.js",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.11.0",
+    "graphql": "^15.4.0",
+    "node-fetch": "^2.6.1",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "devstart" : "nodemon app",
+    "start": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/biggaji/graphql_axios.git"
   },
-  "keywords": [
-    "graphql",
-    "axios"
-  ],
-  "author": "Tobi Ajibade",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/biggaji/graphql_axios/issues"
