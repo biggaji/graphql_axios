@@ -7,3 +7,8 @@ const dbConnect = new Pool({
     port: process.env.DBPORT,
     database: process.env.DBNAME
 })
+
+
+module.exports = {
+    db : dbConnect
+}
