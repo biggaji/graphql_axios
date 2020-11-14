@@ -1,4 +1,4 @@
-const graphql = require('graphql');
+const { db } = require('../configs/db');
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLSchema, GraphQLInt } = require('graphql');
 
 //create a graphql object type
@@ -35,6 +35,13 @@ const rootQuery = new GraphQLObjectType({
             args: {authorid: {type: GraphQLString}},
             resolve(parent,args,req) {
                 //args.bookid
+                return db.query('SELECT * FROM author WHERE authorid = $1', [args.authorid])
+                .then(author => {
+                    return author;
+                })
+                .catch(err => {
+                    throw err;
+                })
             }
         },
         book: {
@@ -42,6 +49,13 @@ const rootQuery = new GraphQLObjectType({
             args: {bookid: {type: GraphQLString}},
             resolve(parent,args,req) {
                 //args.bookid
+                return db.query('SELECT * FROM books WHERE bookid = $1', [args.bookid])
+                .then(book => {
+                    return book;
+                })
+                .catch(err => {
+                    throw err;
+                })
             }
         }
     }
