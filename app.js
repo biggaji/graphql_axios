@@ -1,11 +1,13 @@
-if(process.env.NODE_ENV=development) {
+if(process.env.NODE_ENV='development') {
   require('dotenv').config();
 }
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
+const graphiqlSchema = require('../graphql_axios/graphqlSchema/schema');
 const app = express();
 
 app.use('/graphql', graphqlHTTP({
+  schema: graphiqlSchema,
   graphiql:true
 }));
 
