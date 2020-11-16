@@ -1,6 +1,7 @@
 const { db } = require('../configs/db');
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLSchema, GraphQLInt } = require('graphql');
 const { generateuuid } = require('../utils/generateuuid');
+const jwt = require('jsonwebtoken');
 
 //create a graphql object type
 
@@ -82,6 +83,27 @@ const Mutation = new GraphQLObjectType({
                 const { name, year_of_release } = req.user;
                 const book = await db.query('INSERT INTO books (bookid,name,year_of_release,authorid) VALUES($1,$2,$3,$4) RETURNING *', [bookid,name,year_of_release,authorid]);
                 return book.rows[0];
+            }
+        },
+        signin: {
+            type: AuthorType,
+            args: {
+                username : {type: new GraphQLNonNull(GraphQLString)}
+            },
+            async resolve(parent,args,context,info){
+                //check if user is available
+                const { username } = args;
+                const user = await db.query('SELECT username FROM author WHERE username = $1',[username]);
+                if(user.rows[0].username !== username) {
+                    throw new Error('No user with that username');
+                } else {
+                    //sign user with jwt
+                    // const {req} = context;
+                    console.log(context())
+                    // const signeduser = await jwt.sign({authorid : user.rows[0].authorid, username: user.rows[0].username}, process.env.JWT_SECRET,{expiresIn : 3600 * 24});
+                    // res.cookie("x_user", signeduser, {maxAge : 3600 * 24, httpOnly: true});
+                    return user.rows[0];
+                }
             }
         }
     }
