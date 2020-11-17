@@ -1,5 +1,5 @@
 const { db } = require('../configs/db');
-const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLSchema, GraphQLInt } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLSchema, GraphQLInt, GraphQLError } = require('graphql');
 const { generateuuid } = require('../utils/generateuuid');
 const jwt = require('jsonwebtoken');
 
@@ -51,6 +51,11 @@ const rootQuery = new GraphQLObjectType({
     }
 });
 
+/**
+ * @param {object} mutation - Graphql mutations for performing crud operations
+ * @returns {object} data - Expected to return an array of objects
+ */
+
 //Mutations
 const Mutation = new GraphQLObjectType({
     name: "mutation",
@@ -90,7 +95,7 @@ const Mutation = new GraphQLObjectType({
             args: {
                 username : {type: new GraphQLNonNull(GraphQLString)}
             },
-            async resolve(parent,args,context,info){
+            async resolve(parent,args,{ res },info){
                 //check if user is available
                 const { username } = args;
                 const user = await db.query('SELECT username FROM author WHERE username = $1',[username]);
@@ -98,10 +103,8 @@ const Mutation = new GraphQLObjectType({
                     throw new Error('No user with that username');
                 } else {
                     //sign user with jwt
-                    // const {req} = context;
-                    console.log(context())
-                    // const signeduser = await jwt.sign({authorid : user.rows[0].authorid, username: user.rows[0].username}, process.env.JWT_SECRET,{expiresIn : 3600 * 24});
-                    // res.cookie("x_user", signeduser, {maxAge : 3600 * 24, httpOnly: true});
+                    const signeduser = await jwt.sign({authorid : user.rows[0].authorid, username: user.rows[0].username}, process.env.JWT_SECRET,{expiresIn : 3600 * 24});
+                    res.cookie("x_user", signeduser, {maxAge : 3600 * 24, httpOnly: true});
                     return user.rows[0];
                 }
             }
