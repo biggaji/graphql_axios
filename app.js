@@ -3,7 +3,7 @@ if(process.env.NODE_ENV='development') {
 }
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
-const graphiqlSchema = require('../graphql_axios/graphqlSchema/schema');
+const graphqlSchema = require('../graphql_axios/graphqlSchema/schema');
 const app = express();
 
 const cookieParser = require('cookie-parser');
@@ -13,14 +13,17 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use('/graphql', graphqlHTTP({
-  schema: graphiqlSchema,
-  graphiql:true,
-  pretty: true,
-  context: ({req}) => {
-   return req;
-  }
-}));
+app.use('/graphql', (req,res,next) => 
+  graphqlHTTP({
+    schema: graphqlSchema,
+    graphiql:true,
+    pretty: true,
+    context: {
+      req,
+      res
+    }
+  })(req,res,next)
+);
 
 app.listen(4000, () => {
     console.log('server running ------------>>>>>>>✨✨✨✔✔');
