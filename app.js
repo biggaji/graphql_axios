@@ -6,12 +6,15 @@ const { graphqlHTTP } = require('express-graphql');
 const graphqlSchema = require('../graphql_axios/graphqlSchema/schema');
 const app = express();
 
+const indexRouter = require('./routes/index');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use('/', indexRouter);
 
 app.use('/graphql', (req,res,next) => 
   graphqlHTTP({
