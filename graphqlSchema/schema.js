@@ -2,6 +2,7 @@ const { db } = require('../configs/db');
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLSchema, GraphQLInt, GraphQLError } = require('graphql');
 const { generateuuid } = require('../utils/generateuuid');
 const jwt = require('jsonwebtoken');
+const { verify } = require('../utils/verifyUser');
 
 //create a graphql object type
 
