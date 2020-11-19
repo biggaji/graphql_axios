@@ -13,7 +13,8 @@ const AuthorType = new GraphQLObjectType({
         authorid : {type : GraphQLString},
         name: {type: GraphQLString},
         username: {type: GraphQLString},
-        date_of_birth: {type:GraphQLString}
+        date_of_birth: {type:GraphQLString},
+        twitter_username: {type: GraphQLString}
     })
 });
 
@@ -108,6 +109,22 @@ const Mutation = new GraphQLObjectType({
                     res.cookie("x_user", signeduser, {maxAge : 3600 * 24, httpOnly: true});
                     return user.rows[0];
                 }
+            }
+        },
+        addTwitterHandle: {
+            type: AuthorType,
+            args: {twitter_username : {type: new GraphQLNonNull(GraphQLString)}},
+            async resolve(parent,args,{req, res},info) {
+                //Store handle inside db where authorid = authorid
+                const { twitter_username } = args;
+                const { authorid } = req.user;
+                db.query('INSERT INTO author(twitter_handle) VALUES($1) WHERE authorid = $2',[twitter_username,authorid])
+                .then(twitter => {
+                    return twitter.rows[0]
+                })
+                .catch(err => {
+                    throw new GraphQLError("An error occured when inserting twitter handle", err);
+                })
             }
         }
     }
