@@ -57,7 +57,6 @@ exports.enter = async (req,res) => {
 
 exports.dashboardControl = async (req,res) => {
     //get user data from the req.user
-    console.log(req.user)
     const { authorid } = req.user;
 
     //find the user based on the authorid
@@ -65,10 +64,33 @@ exports.dashboardControl = async (req,res) => {
     db.query('SELECT name, username, twitter_handle FROM author WHERE authorid = $1', [authorid])
     .then(author => {
         const authorData = author.rows[0];
-        console.log(authorData)
         res.render('dashboard', {user: authorData})
     })
     .catch(e => {
         res.render('signin', {error: e})
     })
+}
+
+//get Twitter handle
+
+exports.twit_handle = async (req,res) => {
+    res.render('addtwitter');
+}
+
+//Add twitter handle
+
+exports.add_twitter_handle = async (req,res) => {
+    //get the twitter_handle fro req.body
+    const { twitter_handle } = req.body;
+    const { authorid } = req.user;
+    
+    //insert into db based on authorid
+
+    db.query('UPDATE author SET twitter_handle = $1 WHERE authorid = $2 RETURNING twitter_handle',[twitter_handle,authorid])
+    .then(th => {
+        res.redirect('/u/dashboard');
+    })
+    .catch(e => {
+        res.redirect('/u/utwitter');
+    });
 }
