@@ -45,6 +45,7 @@ exports.enter = async (req,res) => {
             //store user in the cookie
             res.cookie("x_user", signeduser, {maxAge : 86400, httpOnly: true});
             res.cookie("isLoggedin", true);
+            res.clearCookie("isLoggedOut");
             res.redirect('/u/dashboard');
         }
     })
@@ -93,4 +94,13 @@ exports.add_twitter_handle = async (req,res) => {
     .catch(e => {
         res.redirect('/u/utwitter');
     });
+}
+
+//Logout user 
+
+exports.logout = async (req,res) => {
+    res.clearCookie("x_user");
+    res.clearCookie("isLoggedin");
+    res.cookie("isLoggedOut", true);
+    res.redirect('/');
 }
