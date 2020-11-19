@@ -1,0 +1,8 @@
+<h3>Dashboard</h3>
+{{#if user}}
+<p>Full Name - {{user.name}}</p>
+<p>Username -  {{user.username}}</p>
+{{#if user.twitter_handle}}
+<p>Twitter - <a href="https://www.twitter.com/{{user.twitter_handle}}">@{{user.twitter_handle}}</a></p>
+{{/if}}
+{{/if}}

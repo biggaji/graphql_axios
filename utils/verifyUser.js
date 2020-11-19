@@ -11,7 +11,7 @@ exports.verify = async (req,res,next) => {
         req.user = decoded;
         next()
     } catch (e) {
-        console.log(e);
-        throw new Error('You need to be authenticated to access this route');
+        console.log(e.name + " " + e.message);
+        res.send('You need to be authenticated to Login first in order to access this route');
     }
 }
