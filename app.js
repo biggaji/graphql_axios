@@ -1,15 +1,24 @@
 if(process.env.NODE_ENV='development') {
   require('dotenv').config();
 }
+const path = require('path');
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const graphqlSchema = require('../graphql_axios/graphqlSchema/schema');
 const app = express();
+const exphbs = require('express-handlebars');
 
 const indexRouter = require('./routes/index');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+//template engine config
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'));
+
+//public
+app.use(express.static('public'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

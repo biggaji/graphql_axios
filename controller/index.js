@@ -15,6 +15,6 @@ exports.indexControl = async (req,res) => {
         return resp.json();
     })
     .then(data => {
-        res.send(data);
+        res.render('index',{user : data.data.author});
     })
 }
