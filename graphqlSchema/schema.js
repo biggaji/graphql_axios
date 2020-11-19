@@ -100,13 +100,18 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent,args,{ res },info){
                 //check if user is available
                 const { username } = args;
-                const user = await db.query('SELECT username FROM author WHERE username = $1',[username]);
+                const user = await db.query('SELECT * FROM author WHERE username = $1',[username]);
                 if(user.rows[0].username !== username) {
-                    throw new Error('No user with that username');
+                    throw new GraphQLError('No user with that username');
                 } else {
                     //sign user with jwt
                     const signeduser = await jwt.sign({authorid : user.rows[0].authorid, username: user.rows[0].username}, process.env.JWT_SECRET,{expiresIn : 3600 * 24});
+                    
+                    //store user in the cookie
                     res.cookie("x_user", signeduser, {maxAge : 3600 * 24, httpOnly: true});
+                     //redirect to dashboard with data
+                    // res.redirect('/u/dashboard');
+
                     return user.rows[0];
                 }
             }

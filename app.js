@@ -9,6 +9,7 @@ const app = express();
 const exphbs = require('express-handlebars');
 
 const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use('/', indexRouter);
+app.use('/u', authRouter)
 
 app.use('/graphql', (req,res,next) => 
   graphqlHTTP({
