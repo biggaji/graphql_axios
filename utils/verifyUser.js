@@ -11,8 +11,6 @@ exports.verify = async (req,res,next) => {
         req.user = decoded;
         next()
     } catch (e) {
-        // console.log(e.name + " " + e.message);
-        // res.send('You need to be authenticated to Login first in order to access this route');
         res.redirect('/u/signin');
     }
 }

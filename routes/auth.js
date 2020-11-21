@@ -5,8 +5,8 @@ const { verify } = require('../utils/verifyUser');
 router.get('/signin', signin);
 router.post('/enter',enter);
 router.get('/dashboard',verify, dashboardControl)
-router.get('/utwitter',verify,twit_handle);
-router.post('/twitter', verify, add_twitter_handle);
+router.get('/utwitter', verify,twit_handle);
+router.post('/twit', verify, add_twitter_handle);
 router.post('/logout', verify,logout);
 
 module.exports = router;
