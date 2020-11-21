@@ -24,7 +24,7 @@ exports.enter = async (req,res) => {
             signin(username: "${username}"){
                     name
                     username
-                    twitter_username
+                    twitter_handle
                     authorid
                 }
             }`
@@ -84,16 +84,51 @@ exports.add_twitter_handle = async (req,res) => {
     //get the twitter_handle fro req.body
     const { twitter_handle } = req.body;
     const { authorid } = req.user;
+    // console.log(authorid)
+
+    //Send the twitter_handle to the graphql server
+
+    fetch(API_ENDPOINT, {
+        method : "post",
+        headers: {
+            'content-type' : 'Application/json',
+            'Accept' : 'application/json',
+            'x_id': `${authorid}`
+        },
+        body : JSON.stringify({
+            query: `
+                mutation {
+                    addTwitterHandle(twitter_handle: "${twitter_handle}") {
+                        twitter_handle
+                    }
+                }
+        `})
+    })
+    .then(resp => {
+        return resp.json();
+    })
+    .then(twitter => {
+        if(twitter.data.addTwitterHandle === null) {
+            res.redirect('/u/utwitter');
+        } else {
+        res.redirect('/u/dashboard');
+        }
+    })
+    .catch(e => {
+        console.log(e)
+        res.redirect('/u/utwitter');
+    })
+    // const { authorid } = req.user;
     
     //insert into db based on authorid
 
-    db.query('UPDATE author SET twitter_handle = $1 WHERE authorid = $2 RETURNING twitter_handle',[twitter_handle,authorid])
-    .then(th => {
-        res.redirect('/u/dashboard');
-    })
-    .catch(e => {
-        res.redirect('/u/utwitter');
-    });
+    // db.query('UPDATE author SET twitter_handle = $1 WHERE authorid = $2 RETURNING twitter_handle',[twitter_handle,authorid])
+    // .then(th => {
+    //     res.redirect('/u/dashboard');
+    // })
+    // .catch(e => {
+    //     res.redirect('/u/utwitter');
+    // });
 }
 
 //Logout user 

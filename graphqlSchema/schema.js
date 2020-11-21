@@ -1,7 +1,6 @@
 const { db } = require('../configs/db');
 const { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLSchema, GraphQLInt, GraphQLError } = require('graphql');
 const { generateuuid } = require('../utils/generateuuid');
-
 //create a graphql object type
 
 //author type
@@ -12,7 +11,7 @@ const AuthorType = new GraphQLObjectType({
         name: {type: GraphQLString},
         username: {type: GraphQLString},
         date_of_birth: {type:GraphQLString},
-        twitter_username: {type: GraphQLString}
+        twitter_handle: {type: GraphQLString}
     })
 });
 
@@ -85,7 +84,7 @@ const Mutation = new GraphQLObjectType({
             async resolve(parent,args,req){
                 const bookid = generateuuid();
                 const { authorid } = req.user;
-                const { name, year_of_release } = req.user;
+                const { name, year_of_release } = req.x_user;
                 const book = await db.query('INSERT INTO books (bookid,name,year_of_release,authorid) VALUES($1,$2,$3,$4) RETURNING *', [bookid,name,year_of_release,authorid]);
                 return book.rows[0];
             }
@@ -95,7 +94,7 @@ const Mutation = new GraphQLObjectType({
             args: {
                 username : {type: new GraphQLNonNull(GraphQLString)}
             },
-            async resolve(parent,args,{ res },info){
+            async resolve(parent,args,{ res,req },info){
                 //check if user is available
                 const { username } = args;
                 const user = await db.query('SELECT * FROM author WHERE username = $1',[username]);
@@ -108,18 +107,14 @@ const Mutation = new GraphQLObjectType({
         },
         addTwitterHandle: {
             type: AuthorType,
-            args: {twitter_username : {type: new GraphQLNonNull(GraphQLString)}},
+            args: {twitter_handle : {type: new GraphQLNonNull(GraphQLString)}},
             async resolve(parent,args,{req, res},info) {
                 //Store handle inside db where authorid = authorid
-                const { twitter_username } = args;
-                const { authorid } = req.user;
-                db.query('INSERT INTO author(twitter_handle) VALUES($1) WHERE authorid = $2',[twitter_username,authorid])
-                .then(twitter => {
-                    return twitter.rows[0]
-                })
-                .catch(err => {
-                    throw new GraphQLError("An error occured when inserting twitter handle", err);
-                })
+                const { twitter_handle } = args;
+                const authorid = req.headers.x_id;
+                
+                const data = await db.query('UPDATE author SET twitter_handle =$1 WHERE authorid = $2 RETURNING twitter_handle',[twitter_handle,authorid]);
+                return data.rows[0]
             }
         }
     }
