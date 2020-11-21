@@ -1,8 +1,21 @@
 body {
-  background-color: yellow;
+  background-color: #fff;
 }
 
 .para {
   color: red;
+}
+
+.avatar_container {
+  width: 200px;
+  height: 200px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border: 1px dotted dodgerblue;
+}
+
+.avatar_container img {
+  width: auto;
+  height: auto;
 }
 /*# sourceMappingURL=main.css.map */
