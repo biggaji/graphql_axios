@@ -1,6 +1,14 @@
 body {
-    background-color: yellow;
-}
-.para {
-    color: red;
+    background-color : #fff;
+}.para {
+    color : red;
+}.avatar_container {
+    width : 200px;
+    height : 200px;
+    object-fit : contain;
+    border: 1px dotted dodgerblue;
+    img {
+        width : auto;
+        height : auto;
+    }
 }
