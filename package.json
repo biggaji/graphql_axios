@@ -4,6 +4,7 @@
   "description": "Learning to make request to graphql backend using axios library",
   "main": "app.js",
   "dependencies": {
+    "aws-sdk": "^2.797.0",
     "axios": "^0.21.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
