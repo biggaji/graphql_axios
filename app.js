@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const accountsRouter = require('./routes/accounts')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -26,7 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/', indexRouter);
-app.use('/u', authRouter)
+app.use('/u', authRouter);
+app.use('/account', accountsRouter);
 
 app.use('/graphql', async (req, res, next) =>
   graphqlHTTP({

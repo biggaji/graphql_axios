@@ -1,7 +1,7 @@
 <div class="dashboard-container container">
-    {{#if user}}
+    {{!-- {{#if user}} --}}
     <div class="avatar_container">
-        <img src={{user.avatar}} alt="{{user.fullname}}">
+        <img src={{user.avatar}} alt="{{user.name}}">
     </div>
     <div class="user-details">
         <p>Full Name - {{user.name}}</p>
@@ -38,5 +38,5 @@
         </div>
     </div>
     {{!-- <a href="/u/utwitter" class="cta-link">Edit Twitter handle</a> --}}
-    {{/if}}
+    {{!-- {{/if}} --}}
 </div>
