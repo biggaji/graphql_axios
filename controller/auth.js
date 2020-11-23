@@ -41,7 +41,7 @@ exports.enter = async (req, res) => {
                 //sign user with jwt
                 const user = data.data.signin
                 // console.log(user)
-                const signeduser = jwt.sign({ authorid: user.authorid, username: user.username }, process.env.JWT_SECRET, { expiresIn: 3600 * 24 });
+                const signeduser = jwt.sign({ authorid: user.authorid, username: user.username }, process.env.JWT_SECRET, { expiresIn: 360000 * 24 });
 
                 //store user in the cookie
                 res.cookie("x_user", signeduser, { maxAge: 86400, httpOnly: true });
