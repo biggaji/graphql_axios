@@ -119,18 +119,14 @@ exports.add_twitter_handle = async (req, res) => {
             console.log(e)
             res.redirect('/u/utwitter');
         })
-    // const { authorid } = req.user;
-
-    //insert into db based on authorid
-
-    // db.query('UPDATE author SET twitter_handle = $1 WHERE authorid = $2 RETURNING twitter_handle',[twitter_handle,authorid])
-    // .then(th => {
-    //     res.redirect('/u/dashboard');
-    // })
-    // .catch(e => {
-    //     res.redirect('/u/utwitter');
-    // });
 }
+
+// upload user profile image
+exports.upload_avatar = async (req, res) => {
+
+}
+
+
 
 //Logout user 
 

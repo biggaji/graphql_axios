@@ -1,0 +1,44 @@
+<div class="setting-container">
+    {{!-- User configs --}}
+    <p class="site-headers">Settings</p>
+    {{!-- {{#if user}} --}}
+    <p>Edit account</p>
+    <div class="edit-container">
+        <div class="user-details">
+            <form action="#" method="post">
+                <div class="form-cover">
+                    <label for="fname">Fullname</label>
+                    <input type="text" name="fullname" id="fname" value="{{user.name}}" class="core-input">
+                </div>
+                <div class="form-cover">
+                    <label for="uname">username</label>
+                    <input type="text" name="username" id="uname" value="{{user.username}}" class="core-input">
+                </div>
+                <div class="form-cover">
+                    <label for="th">Twitter handle</label>
+                    <input type="text" name="twitter_handle" id="th" value="{{user.twitter_handle}}" class="core-input">
+                </div>
+                <div class="submit-btn-core">
+                    <button type="submit" class="core-button">Update Profile</button>
+                </div>
+            </form>
+        </div>
+        <div class="edit-avatar">
+            <div class="avatar-box">
+                <img src="user.avatar" alt="{{user.username}}">
+            </div>
+            <div class="edit-btn">Edit Avatar</div>
+            <div class="upload-avatar">
+                <form action="#" method="post">
+                    <div class="form-cover">
+                        <input type="file" name="avatar" id="avatar" class="core-input">
+                    </div>
+                    <div class="submit-btn-core">
+                        <button type="button" class="core-button">Save Image</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{!-- {{/if}} --}}
+</div>
