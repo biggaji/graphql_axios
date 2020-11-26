@@ -43,5 +43,5 @@ app.use('/graphql', async (req, res, next) =>
 );
 
 app.listen(4000, () => {
-  console.log('server running ------------>>>>>>>✨✨✨✔✔');
+  console.log('server running ------------>>>>>>>✨✨✨');
 });

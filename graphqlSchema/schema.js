@@ -11,7 +11,8 @@ const AuthorType = new GraphQLObjectType({
         name: { type: GraphQLString },
         username: { type: GraphQLString },
         date_of_birth: { type: GraphQLString },
-        twitter_handle: { type: GraphQLString }
+        twitter_handle: { type: GraphQLString },
+        avatar: { type: GraphQLString }
     })
 });
 

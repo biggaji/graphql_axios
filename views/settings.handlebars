@@ -25,16 +25,16 @@
         </div>
         <div class="edit-avatar">
             <div class="avatar-box">
-                <img src="user.avatar" alt="{{user.username}}">
+                <img src="/uploads/{{user.avatar}}" alt="{{user.username}}">
             </div>
             <div class="edit-btn">Edit Avatar</div>
             <div class="upload-avatar">
-                <form action="#" method="post">
+                <form action="/account/upload_avatar" method="post" enctype="multipart/form-data">
                     <div class="form-cover">
                         <input type="file" name="avatar" id="avatar" class="core-input">
                     </div>
                     <div class="submit-btn-core">
-                        <button type="button" class="core-button">Save Image</button>
+                        <button type="submit" class="core-button">Save Image</button>
                     </div>
                 </form>
             </div>
