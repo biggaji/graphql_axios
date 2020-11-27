@@ -41,10 +41,9 @@ body {
     width : 200px;
     height : 200px;
     object-fit : contain;
-    border: 1px dotted dodgerblue;
     img {
         width : auto;
-        height : auto;
+        height : 200px;
     }
 }
 .setting-container {
@@ -68,11 +67,10 @@ body {
             width : 150px;
             height : 130px;
             object-fit : contain;
-            border: 1px solid dodgerblue;
             margin: 7px 0;
             img {
-                width : auto;
-                height : auto;
+                width : inherit;
+                height : inherit;
             }
         }
     }

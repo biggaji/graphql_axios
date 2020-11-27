@@ -50,12 +50,11 @@ body {
   height: 200px;
   -o-object-fit: contain;
      object-fit: contain;
-  border: 1px dotted dodgerblue;
 }
 
 .avatar_container img {
   width: auto;
-  height: auto;
+  height: 200px;
 }
 
 .setting-container {
@@ -94,13 +93,12 @@ body {
   height: 130px;
   -o-object-fit: contain;
      object-fit: contain;
-  border: 1px solid dodgerblue;
   margin: 7px 0;
 }
 
 .edit-container .edit-avatar .avatar-box img {
-  width: auto;
-  height: auto;
+  width: inherit;
+  height: inherit;
 }
 
 .form-cover {

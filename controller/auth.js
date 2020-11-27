@@ -27,6 +27,7 @@ exports.enter = async (req, res) => {
                     username
                     twitter_handle
                     authorid
+                    avatar
                 }
             }`
         })
@@ -63,7 +64,7 @@ exports.dashboardControl = async (req, res) => {
 
     //find the user based on the authorid
 
-    db.query('SELECT name, username, twitter_handle FROM author WHERE authorid = $1', [authorid])
+    db.query('SELECT name, username, twitter_handle, avatar FROM author WHERE authorid = $1', [authorid])
         .then(author => {
             const authorData = author.rows[0];
             res.render('dashboard', { user: authorData, pagename: "Dashboard" })
@@ -120,12 +121,6 @@ exports.add_twitter_handle = async (req, res) => {
             res.redirect('/u/utwitter');
         })
 }
-
-// upload user profile image
-exports.upload_avatar = async (req, res) => {
-
-}
-
 
 
 //Logout user 

@@ -1,9 +1,9 @@
 <div class="dashboard-container container">
     {{!-- {{#if user}} --}}
     <div class="avatar_container">
-        <img src={{user.avatar}} alt="{{user.name}}">
+        <img src="/uploads/{{user.avatar}}" alt="{{user.username}}">
     </div>
-    <div class="user-details">
+    <div class=" user-details">
         <p>Full Name - {{user.name}}</p>
         <p>Username - {{user.username}}</p>
         {{#if user.twitter_handle}}
